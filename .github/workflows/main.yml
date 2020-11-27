@@ -1,0 +1,34 @@
+name: CI
+
+on:
+  push:
+    branches: [master]
+
+env:
+  FIREBASE_TOKEN: 1//0c3OoQMVIuD5RCgYIARAAGAwSNwF-L9IrOpNMmrHbGnUeONUpoJwRXi90xV-bAhImm_8u9beHBJequc9GATDWivNLxObDR7GY9CM
+  FIREBASE_APP_ID: 1:1041988190591:android:c7272c01e0814f3b535a4a
+
+jobs:
+  build_andorid:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: actions/cache@v2
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-client-npm-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-client-npm-
+
+      - name: Install npm dependencies
+        run: npm ci
+
+      - name: build
+        run: cd android && ./gradlew assembleRelease
+
+      - name: distribute apk
+        uses: w9jds/firebase-action@master
+        with:
+          args: appdistribution:distribute android/app/build/outputs/apk/release/app-release.apk --app $FIREBASE_APP_ID --groups "devticon"
