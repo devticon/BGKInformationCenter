@@ -1,0 +1,9 @@
+{
+  "root": true,
+  "extends": [
+    "@react-native-community/eslint-config",
+    "eslint-config-prettier",
+    "eslint-config-prettier/@typescript-eslint",
+    "eslint-config-prettier/react"
+  ]
+}
