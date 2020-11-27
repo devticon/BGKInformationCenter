@@ -1,8 +1,8 @@
 import React, { FC } from 'react';
-import { Text } from 'react-native';
+import ArticlesList from './screens/ArticlesList/ArticlesList';
 
 const App: FC = () => {
-  return <Text>Hello!</Text>;
+  return <ArticlesList />;
 };
 
 export default App;
