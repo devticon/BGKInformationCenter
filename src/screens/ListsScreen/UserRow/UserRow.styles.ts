@@ -5,6 +5,11 @@ export const styles = StyleSheet.create({
   row: {
     paddingHorizontal: gutterLarge,
     paddingVertical: gutter,
+    flexDirection: 'row',
+  },
+  avatar: {
+    marginTop: gutter / 2,
+    marginRight: gutter,
   },
   name: {
     fontSize: fontSizes.normal,

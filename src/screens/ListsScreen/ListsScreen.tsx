@@ -1,9 +1,9 @@
 import { Icon, Spinner, Text } from '@components';
 import React, { FC, useMemo } from 'react';
 import { SectionList, View } from 'react-native';
-import { useSharePointLists } from '../../hooks/useSharePointLists';
-import { useSitesLists } from '../../hooks/useSitesList';
-import { useUsersLists } from '../../hooks/useUsersList';
+import { useSharePointLists } from '@hooks';
+import { useSitesLists } from '@hooks';
+import { useUsersLists } from '@hooks';
 import ArticleRow from '../NewsListScreen/ArticleRow/ArticleRow';
 import DocumentRow from './DocumentRow/DocumentRow';
 import { styles } from './ListsScreen.styles';

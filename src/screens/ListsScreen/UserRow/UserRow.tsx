@@ -1,14 +1,8 @@
-import { Text } from '@components';
+import { Avatar, Text } from '@components';
 import React, { FC } from 'react';
 import { View } from 'react-native';
+import { User } from '../../../models';
 import { styles } from './UserRow.styles';
-
-type User = {
-  id: string;
-  displayName: string;
-  jobTitle: string;
-  mail: string;
-};
 
 type Props = {
   user: User;
@@ -17,9 +11,12 @@ type Props = {
 const UserRow: FC<Props> = ({ user }) => {
   return (
     <View style={styles.row}>
-      <Text style={styles.name}>{user.displayName}</Text>
-      <Text style={styles.caption}>{user.mail}</Text>
-      {!!user.jobTitle && <Text style={styles.caption}>Stanowisko: {user.jobTitle}</Text>}
+      <Avatar style={styles.avatar} name={user.displayName} />
+      <View>
+        <Text style={styles.name}>{user.displayName}</Text>
+        <Text style={styles.caption}>{user.mail}</Text>
+        {!!user.jobTitle && <Text style={styles.caption}>Stanowisko: {user.jobTitle}</Text>}
+      </View>
     </View>
   );
 };

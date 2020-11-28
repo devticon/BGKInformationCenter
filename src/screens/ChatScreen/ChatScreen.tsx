@@ -1,7 +1,7 @@
 import { RouteProp, useRoute } from '@react-navigation/native';
 import React, { FC, useRef } from 'react';
 import { ScrollView } from 'react-native';
-import { useChannelMessages } from '../../hooks/useChannelMessages';
+import { useChannelMessages } from '@hooks';
 import { Routes, TabParamList } from '../../navigation/routes';
 import ChatInput from './ChatInput/ChatInput';
 import ChatMessage from './ChatMessage/ChatMessage';

@@ -2,16 +2,8 @@ import { Button, Text } from '@components';
 import { formatDateTime } from '@utils';
 import React, { FC } from 'react';
 import { Linking, View } from 'react-native';
+import { Document } from '../../../models';
 import { styles } from './DocumentRow.styles';
-
-type Document = {
-  id: string;
-  webUrl: string;
-  fields: {
-    LinkFilename: string;
-    Modified: string;
-  };
-};
 
 type Props = {
   document: Document;

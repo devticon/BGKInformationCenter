@@ -4,7 +4,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import React, { FC, useEffect } from 'react';
 import { View } from 'react-native';
 import RNBootSplash from 'react-native-bootsplash';
-import { AuthContextProvider } from './contexts/AuthContext';
+import { AuthContextProvider } from './contexts';
 import Header from './navigation/Header/Header';
 import { Routes, TabParamList } from './navigation/routes';
 import TabBar from './navigation/TabBar/TabBar';

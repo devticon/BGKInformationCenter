@@ -1,7 +1,7 @@
 import { Icon, Text } from '@components';
 import React, { FC } from 'react';
 import { Modal, Pressable, View } from 'react-native';
-import { useAuthContext } from '../../../contexts/AuthContext';
+import { useAuthContext } from '../../../contexts';
 import { styles } from './UserMenu.styles';
 
 type Props = {

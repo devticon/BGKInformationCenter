@@ -2,16 +2,9 @@ import { Text } from '@components';
 import { formatDateTimeShort } from '@utils';
 import React, { FC } from 'react';
 import { View } from 'react-native';
-import { useAuthContext } from '../../../contexts/AuthContext';
+import { useAuthContext } from '../../../contexts';
+import { Message } from '../../../models';
 import { styles } from './ChatMessage.styles';
-
-type Message = {
-  id: string;
-  userId: string;
-  userDisplayName: string;
-  createdDateTime: string;
-  content: string;
-};
 
 type Props = {
   message: Message;

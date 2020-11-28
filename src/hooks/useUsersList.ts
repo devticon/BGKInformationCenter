@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react';
 import { watchMany } from '../gun';
+import { User } from '../models';
 
 export function useUsersLists() {
-  const [users, setUsers] = useState<any[]>([]);
+  const [users, setUsers] = useState<User[]>([]);
 
   useEffect(() => {
-    watchMany('users', async users => {
-      users = users.filter(Boolean);
-      setUsers(users);
+    watchMany('users', _users => {
+      setUsers(_users.filter(Boolean));
     });
   }, []);
 

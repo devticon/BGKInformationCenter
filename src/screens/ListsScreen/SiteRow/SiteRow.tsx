@@ -2,14 +2,8 @@ import { Button, Text } from '@components';
 import { formatDateTime } from '@utils';
 import React, { FC } from 'react';
 import { Linking, View } from 'react-native';
+import { Site } from '../../../models';
 import { styles } from './SiteRow.styles';
-
-type Site = {
-  id: string;
-  displayName: string;
-  webUrl: string;
-  lastModifiedDateTime: string;
-};
 
 type Props = {
   site: Site;

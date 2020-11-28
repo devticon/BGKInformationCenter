@@ -3,7 +3,7 @@ import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 import { useNavigation } from '@react-navigation/native';
 import React, { FC } from 'react';
 import { Pressable, SectionList } from 'react-native';
-import { useTeamsLists } from '../../hooks/useTeamsList';
+import { useTeamsLists } from '@hooks';
 import { Routes, TabParamList } from '../../navigation/routes';
 import { styles } from './TeamsListScreen.styles';
 
