@@ -3,7 +3,7 @@ export const colors = {
   success: '#64d58e',
   danger: '#ff8f78',
   light: '#f7f7f7',
-  medium: '#b9b9b9',
+  medium: '#d6d1d1',
   dark: '#222428',
 
   text: '#000',

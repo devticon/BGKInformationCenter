@@ -1,8 +1,8 @@
 import { Spinner, Text } from '@components';
 import React, { FC } from 'react';
-import { SectionList, View } from 'react-native';
+import { Pressable, SectionList } from 'react-native';
 import { useTeamsLists } from '../../hooks/useTeamsList';
-import { styles } from '../ListsScreen/ListsScreen.styles';
+import { styles } from './TeamsListScreen.styles';
 
 const TeamsListScreen: FC = () => {
   const teams = useTeamsLists();
@@ -15,18 +15,16 @@ const TeamsListScreen: FC = () => {
   return (
     <SectionList
       sections={sections}
-      contentContainerStyle={styles.list}
-      keyExtractor={(item, index) => item.id + index}
-      renderItem={({ item, section }) => {
-        return <Text>{item.displayName || 'xd'}</Text>;
+      keyExtractor={item => item.id}
+      renderItem={({ item }) => {
+        return (
+          <Pressable>
+            <Text style={styles.channelName}># {item.displayName}</Text>
+          </Pressable>
+        );
       }}
       renderSectionHeader={({ section }) => {
-        return (
-          <View style={styles.title}>
-            {/*<Icon name={getSectionIcon(section.template)} />*/}
-            <Text style={styles.titleText}>{section.displayName}</Text>
-          </View>
-        );
+        return <Text style={styles.teamName}>{section.displayName}</Text>;
       }}
     />
   );
