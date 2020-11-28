@@ -1,4 +1,4 @@
-import { CLIENT_ID, TENANT_ID } from '@env';
+import { API_URL, CLIENT_ID, TENANT_ID } from '@env';
 import { AuthorizeResult } from 'react-native-app-auth';
 
 export const authConfig = {
@@ -9,7 +9,7 @@ export const authConfig = {
 };
 
 export function authenticate(authState: AuthorizeResult) {
-  return fetch('https://devticon.loca.lt/ms-subscribe', {
+  return fetch(`${API_URL}/ms-subscribe`, {
     method: 'POST',
     headers: { 'content-type': 'application/json' },
     body: JSON.stringify(authState),
