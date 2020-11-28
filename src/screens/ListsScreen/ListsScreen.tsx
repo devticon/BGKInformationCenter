@@ -3,8 +3,20 @@ import React, { FC } from 'react';
 import { SafeAreaView, SectionList, View } from 'react-native';
 import { useSharePointLists } from '../../hooks/useSharePointLists';
 import ArticleRow from '../ArticleRow/ArticleRow';
+import DocumentRow from '../DocumentRow/DocumentRow';
 import { articles } from '../mock';
 import { styles } from './ListsScreen.styles';
+
+const getSectionIcon = (template: string): string => {
+  switch (template) {
+    case 'events':
+      return 'calendar-outline';
+    case 'documentLibrary':
+      return 'documents-outline';
+    default:
+      return 'apps-outline';
+  }
+};
 
 const ListsScreen: FC = () => {
   const lists = useSharePointLists();
@@ -13,7 +25,7 @@ const ListsScreen: FC = () => {
     return <Spinner />;
   }
 
-  const xds = lists.map(list => ({ ...list, data: articles || list.items || [] }));
+  const xds = lists.map(list => ({ ...list, data: list.items || articles }));
 
   return (
     <SafeAreaView>
@@ -21,16 +33,17 @@ const ListsScreen: FC = () => {
         sections={xds}
         contentContainerStyle={styles.list}
         keyExtractor={(item, index) => item.id + index}
-        renderItem={({ item, index, section }) => {
-          // console.log(item);
-          return <ArticleRow article={item} />;
+        renderItem={({ item, section }) => {
+          if (section.template === 'documentLibrary') {
+            return <DocumentRow document={item} />;
+          } else {
+            return <ArticleRow article={item} />;
+          }
         }}
-        ListEmptyComponent={<Text>Brak danych.</Text>}
         renderSectionHeader={({ section }) => {
-          console.log(section.template);
           return (
             <View style={styles.title}>
-              <Icon name="calendar-outline" />
+              <Icon name={getSectionIcon(section.template)} />
               <Text style={styles.titleText}>{section.displayName}</Text>
             </View>
           );

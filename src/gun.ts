@@ -24,3 +24,18 @@ export async function getMany(path: string): Promise<any[]> {
       .map(key => getOnce(list[key]['#'])),
   );
 }
+
+export function watchMany(path: string, callback: (data: any[]) => void) {
+  gun.get(path).on(list => {
+    if (!list) {
+      callback([]);
+    }
+    Promise.all(
+      Object.keys(list)
+        .filter(key => key !== '_')
+        .map(key => {
+          return getOnce(list[key]['#']);
+        }),
+    ).then(callback);
+  });
+}

@@ -24,9 +24,9 @@ export const AuthContextProvider: FC = ({ children }) => {
   const login = useCallback(async () => {
     try {
       const authState = await authorize(authConfig);
-      const { id } = await authenticate(authState);
+      const response = await authenticate(authState);
       await AsyncStorage.setItem('AuthorizeResult', JSON.stringify(authState));
-      await AsyncStorage.setItem('UserId', id);
+      await AsyncStorage.setItem('UserId', response.id);
       setIsAuthenticated(true);
     } catch (error) {
       console.error(error);

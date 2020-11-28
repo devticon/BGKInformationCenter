@@ -9,7 +9,7 @@ export function formatTime(date: Date | number | string): string {
   return `${hour}:${minute}`;
 }
 
-export function formatDate(date: Date | number | string): string {
+export function formatDate(date: Date | number | string = 0): string {
   const parsed = parseDate(date);
   const day = parsed.getDate().toString().padStart(2, '0');
   const month = parsed.getMonth().toString().padStart(2, '0');

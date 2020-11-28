@@ -2,8 +2,15 @@ import { Text } from '@components';
 import { formatDate } from '@utils';
 import React, { FC } from 'react';
 import { Image, View } from 'react-native';
-import { Article } from '../mock';
 import { styles } from './ArticleRow.styles';
+
+type Article = {
+  id: string;
+  title: string;
+  date: string;
+  image: string;
+  link: string;
+};
 
 type Props = {
   article: Article;
