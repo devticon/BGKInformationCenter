@@ -6,6 +6,8 @@ export function useTeamsLists() {
 
   useEffect(() => {
     getMany('me/teams').then(async teams => {
+      teams = teams.filter(Boolean);
+
       for (const team of teams) {
         if (team.channels && team.channels['#']) {
           team.channels = await getMany(team.channels['#']);
@@ -18,6 +20,7 @@ export function useTeamsLists() {
           team.members = [];
         }
       }
+
       setTeams(teams);
     });
   }, []);

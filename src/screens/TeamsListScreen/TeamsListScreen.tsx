@@ -10,7 +10,7 @@ import { styles } from './TeamsListScreen.styles';
 const TeamsListScreen: FC = () => {
   const { navigate } = useNavigation<BottomTabNavigationProp<TabParamList, Routes.TeamsList>>();
   const teams = useTeamsLists();
-  const sections = teams.map(team => ({ ...team, data: [...team.channels, ...team.members] }));
+  const sections = teams.map(team => ({ ...team, data: team.channels }));
 
   if (!teams?.length) {
     return <Spinner />;

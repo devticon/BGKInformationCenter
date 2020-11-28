@@ -2,7 +2,7 @@ export function parseDate(date: Date | string | number): Date {
   return typeof date === 'number' || typeof date === 'string' ? new Date(date) : date;
 }
 
-export function formatTime(date: Date | number | string): string {
+export function formatTime(date: Date | number | string = 0): string {
   const parsed = parseDate(date);
   const hour = parsed.getHours().toString().padStart(2, '0');
   const minute = parsed.getMinutes().toString().padStart(2, '0');
@@ -17,6 +17,6 @@ export function formatDate(date: Date | number | string = 0): string {
   return `${day}.${month}.${year}`;
 }
 
-export function formatDateTime(date: Date | number | string): string {
+export function formatDateTime(date: Date | number | string = 0): string {
   return `${formatDate(date)}, ${formatTime(date)}`;
 }
