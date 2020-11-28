@@ -14,7 +14,7 @@ const ChatScreen: FC = () => {
     <ScrollView contentContainerStyle={styles.container}>
       {messages.map((message, i) => (
         <View key={message.id} style={[styles.message, { alignSelf: i % 2 ? 'flex-start' : 'flex-end' }]}>
-          <Text>{message.body.content}</Text>
+          <Text>{message.content}</Text>
         </View>
       ))}
     </ScrollView>
