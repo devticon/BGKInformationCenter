@@ -26,4 +26,9 @@ export const styles = StyleSheet.create({
     height: 40,
     width: Math.ceil(40 * logoAspectRatio),
   },
+  avatar: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+  },
 });
