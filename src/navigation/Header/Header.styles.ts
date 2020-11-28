@@ -11,7 +11,7 @@ export const styles = StyleSheet.create({
     paddingLeft: gutter * 3,
     ...shadow(5),
     flexDirection: 'row',
-    justifyContent: 'center',
+    justifyContent: 'space-between',
     alignItems: 'center',
   },
   left: {

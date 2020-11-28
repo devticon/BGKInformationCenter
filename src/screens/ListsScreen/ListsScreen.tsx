@@ -2,8 +2,7 @@ import { Icon, Spinner, Text } from '@components';
 import React, { FC } from 'react';
 import { SectionList, View } from 'react-native';
 import { useSharePointLists } from '../../hooks/useSharePointLists';
-import { articles } from '../mock';
-import ArticleRow from './ArticleRow/ArticleRow';
+import ArticleRow from '../NewsListScreen/ArticleRow/ArticleRow';
 import DocumentRow from './DocumentRow/DocumentRow';
 import { styles } from './ListsScreen.styles';
 

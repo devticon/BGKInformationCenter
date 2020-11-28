@@ -1,4 +1,4 @@
-import { Button } from '@components';
+import { Button, Spinner } from '@components';
 import React, { FC, useState } from 'react';
 import { Image, Pressable, View } from 'react-native';
 import avatar from '../../../assets/images/avatar.png';
@@ -8,7 +8,7 @@ import { styles } from './Header.styles';
 import UserMenu from './UserMenu/UserMenu';
 
 const Header: FC = () => {
-  const { isAuthenticated, login } = useAuthContext();
+  const { isAuthenticated, login, isLoading } = useAuthContext();
   const [userMenuVisible, setUserMenuVisible] = useState(false);
 
   return (
@@ -16,15 +16,20 @@ const Header: FC = () => {
       <View style={styles.left}>
         <Image style={styles.logo} source={logo} />
       </View>
-      <View style={styles.right}>
-        {isAuthenticated ? (
-          <Pressable onPress={() => setUserMenuVisible(true)}>
-            <Image source={avatar} style={styles.avatar} />
-          </Pressable>
-        ) : (
-          <Button size="small" variant="outlined" text="Zaloguj" onPress={login} />
-        )}
-      </View>
+
+      {isLoading ? (
+        <Spinner style={styles.avatar} size="small" />
+      ) : (
+        <View style={styles.right}>
+          {isAuthenticated ? (
+            <Pressable onPress={() => setUserMenuVisible(true)}>
+              <Image source={avatar} style={styles.avatar} />
+            </Pressable>
+          ) : (
+            <Button size="small" variant="outlined" text="Zaloguj" onPress={login} />
+          )}
+        </View>
+      )}
 
       {userMenuVisible && <UserMenu onClose={() => setUserMenuVisible(false)} />}
     </View>

@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import { FlatList } from 'react-native';
-import ArticleRow from '../ListsScreen/ArticleRow/ArticleRow';
+import ArticleRow from './ArticleRow/ArticleRow';
 import { articles } from '../mock';
 import { styles } from './NewsListScreen.styles';
 

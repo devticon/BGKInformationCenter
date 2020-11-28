@@ -1,7 +1,7 @@
 import { Text } from '@components';
 import { formatDate } from '@utils';
 import React, { FC } from 'react';
-import { Image, View } from 'react-native';
+import { Image, Linking, Pressable, View } from 'react-native';
 import { styles } from './ArticleRow.styles';
 
 type Article = {
@@ -18,7 +18,7 @@ type Props = {
 
 const ArticleRow: FC<Props> = ({ article }) => {
   return (
-    <View style={styles.row}>
+    <Pressable style={styles.row} onPress={() => Linking.openURL(article.link)}>
       <View style={styles.left}>
         <Text style={styles.title} numberOfLines={3}>
           {article.title}
@@ -28,7 +28,7 @@ const ArticleRow: FC<Props> = ({ article }) => {
       <View style={styles.right}>
         <Image style={styles.image} source={{ uri: article.image }} />
       </View>
-    </View>
+    </Pressable>
   );
 };
 
