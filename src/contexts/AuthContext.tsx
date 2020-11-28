@@ -6,6 +6,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 type AuthContextValues = {
   isAuthenticated: boolean;
   isLoading: boolean;
+  userId: string;
   login: () => void;
   logout: () => void;
 };
@@ -16,9 +17,11 @@ export const useAuthContext = () => useContext(AuthContext);
 export const AuthContextProvider: FC = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [userId, setUserId] = useState('');
 
   useEffect(() => {
     AsyncStorage.getItem('UserId').then(id => {
+      setUserId(id || '');
       setIsAuthenticated(!!id);
     });
   }, []);
@@ -30,6 +33,7 @@ export const AuthContextProvider: FC = ({ children }) => {
       const response = await authenticate(authState);
       await AsyncStorage.setItem('AuthorizeResult', JSON.stringify(authState));
       await AsyncStorage.setItem('UserId', response.id);
+      setUserId(response.id);
       setIsAuthenticated(true);
     } catch (error) {
       console.error(error);
@@ -41,8 +45,13 @@ export const AuthContextProvider: FC = ({ children }) => {
   const logout = useCallback(async () => {
     await AsyncStorage.setItem('AuthorizeResult', '');
     await AsyncStorage.setItem('UserId', '');
+    setUserId('');
     setIsAuthenticated(false);
   }, []);
 
-  return <AuthContext.Provider value={{ isAuthenticated, isLoading, login, logout }}>{children}</AuthContext.Provider>;
+  return (
+    <AuthContext.Provider value={{ isAuthenticated, isLoading, userId, login, logout }}>
+      {children}
+    </AuthContext.Provider>
+  );
 };

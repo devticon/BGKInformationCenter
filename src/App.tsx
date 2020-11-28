@@ -29,7 +29,7 @@ const App: FC = () => {
           <Tab.Screen name={Routes.NewsList} component={NewsListScreen} />
           <Tab.Screen name={Routes.TeamsList} component={TeamsListScreen} />
           <Tab.Screen name={Routes.Search} component={View} />
-          <Tab.Screen name={Routes.Chat} component={ChatScreen} />
+          <Tab.Screen name={Routes.Chat} component={ChatScreen} options={{ tabBarVisible: false }} />
         </Tab.Navigator>
       </AuthContextProvider>
     </NavigationContainer>

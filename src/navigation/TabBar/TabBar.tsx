@@ -5,8 +5,15 @@ import { View } from 'react-native';
 import { tabMenu } from '../tab-menu';
 import { styles } from './TabBar.styles';
 
-const TabBar: FC<BottomTabBarProps> = ({ navigation, state }) => {
+const TabBar: FC<BottomTabBarProps> = ({ navigation, state, descriptors }) => {
   const activeTabRoute = state.routeNames[state.index];
+  const focusedRoute = state.routes[state.index];
+  const focusedDescriptor = descriptors[focusedRoute.key];
+  const focusedOptions = focusedDescriptor.options;
+
+  if (focusedOptions.tabBarVisible === false) {
+    return null;
+  }
 
   return (
     <View style={styles.tabsContainer}>
