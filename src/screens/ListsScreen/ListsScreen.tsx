@@ -1,10 +1,10 @@
 import { Icon, Spinner, Text } from '@components';
 import React, { FC } from 'react';
-import { SafeAreaView, SectionList, View } from 'react-native';
+import { SectionList, View } from 'react-native';
 import { useSharePointLists } from '../../hooks/useSharePointLists';
-import ArticleRow from '../ArticleRow/ArticleRow';
-import DocumentRow from '../DocumentRow/DocumentRow';
 import { articles } from '../mock';
+import ArticleRow from './ArticleRow/ArticleRow';
+import DocumentRow from './DocumentRow/DocumentRow';
 import { styles } from './ListsScreen.styles';
 
 const getSectionIcon = (template: string): string => {
@@ -20,15 +20,11 @@ const getSectionIcon = (template: string): string => {
 
 const ListsScreen: FC = () => {
   const lists = useSharePointLists();
+  const sections = lists.map(list => ({ ...list, data: list.items.length ? list.items : articles }));
 
   if (!lists?.length) {
     return <Spinner />;
   }
-
-  const sections = lists.map(list => ({
-    ...list,
-    data: list.items.length ? list.items : articles,
-  }));
 
   return (
     <SectionList

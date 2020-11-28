@@ -5,8 +5,8 @@ export function useSharePointLists() {
   const [lists, setLists] = useState<any[]>([]);
 
   useEffect(() => {
-    getMany('me/sharepoint/lists').then(async data => {
-      for (const list of data) {
+    getMany('me/sharepoint/lists').then(async lists => {
+      for (const list of lists) {
         if (list.items && list.items['#']) {
           list.items = await getMany(list.items['#']);
           for (const item of list.items) {
@@ -18,7 +18,7 @@ export function useSharePointLists() {
           list.items = [];
         }
       }
-      setLists(data);
+      setLists(lists);
     });
   }, []);
 

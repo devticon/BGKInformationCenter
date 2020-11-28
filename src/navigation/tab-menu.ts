@@ -16,7 +16,7 @@ export const tabMenu: Tab[] = [
   },
   {
     icon: 'chatbox-outline',
-    route: Routes.ThreadsList,
+    route: Routes.TeamsList,
   },
   {
     icon: 'search-outline',

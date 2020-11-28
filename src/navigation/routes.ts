@@ -1,6 +1,6 @@
 export enum Routes {
   Lists = 'Lists',
   News = 'News',
-  ThreadsList = 'ThreadsList',
+  TeamsList = 'TeamsList',
   Search = 'Search',
 }
