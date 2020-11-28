@@ -22,8 +22,9 @@ export const AuthContextProvider: FC = ({ children }) => {
   const [username, setUsername] = useState('');
 
   useEffect(() => {
-    AsyncStorage.getItem('UserId').then(id => {
+    Promise.all([AsyncStorage.getItem('UserId'), AsyncStorage.getItem('Username')]).then(([id, username]) => {
       setUserId(id || '');
+      setUsername(username || '');
       setIsAuthenticated(!!id);
     });
   }, []);
@@ -35,6 +36,7 @@ export const AuthContextProvider: FC = ({ children }) => {
       const response = await authenticate(authState);
       await AsyncStorage.setItem('AuthorizeResult', JSON.stringify(authState));
       await AsyncStorage.setItem('UserId', response.id);
+      await AsyncStorage.setItem('Username', response.displayName);
       setUserId(response.id);
       setUsername(response.displayName);
       setIsAuthenticated(true);

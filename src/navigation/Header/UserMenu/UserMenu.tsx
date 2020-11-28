@@ -9,7 +9,7 @@ type Props = {
 };
 
 const UserMenu: FC<Props> = ({ onClose }) => {
-  const { logout } = useAuthContext();
+  const { logout, username } = useAuthContext();
 
   const handleLogout = () => {
     logout();
@@ -21,10 +21,7 @@ const UserMenu: FC<Props> = ({ onClose }) => {
       <View style={styles.modal}>
         <Pressable style={styles.overlay} onPress={onClose} />
         <View style={styles.wrapper}>
-          <Pressable style={[styles.item, { borderTopWidth: 0 }]}>
-            <Icon style={styles.itemIcon} name="settings-outline" />
-            <Text style={styles.itemText}>Ustawienia</Text>
-          </Pressable>
+          <Text style={[styles.item, styles.itemText, { borderTopWidth: 0 }]}>{username}</Text>
           <Pressable style={styles.item}>
             <Icon style={styles.itemIcon} name="log-out-outline" />
             <Text style={styles.itemText} onPress={handleLogout}>
