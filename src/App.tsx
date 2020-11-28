@@ -1,9 +1,11 @@
 import 'react-native-gesture-handler';
+import { Button } from '@components';
 import { CLIENT_ID, TENANT_ID } from '@env';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
-import React, { FC } from 'react';
+import React, { FC, useEffect } from 'react';
 import { authorize } from 'react-native-app-auth';
+import { gun } from './gun';
 import Header from './navigation/Header/Header';
 import { Routes } from './navigation/routes';
 import TabBar from './navigation/TabBar/TabBar';
@@ -28,9 +30,16 @@ const App: FC = () => {
     }
   };
 
+  useEffect(() => {
+    gun.get('me').on(user => {
+      console.log(user.displayName);
+    });
+  }, []);
+
   return (
     <NavigationContainer>
       <Header />
+      <Button text="Login" onPress={handleLogin} />
       <Tab.Navigator tabBar={props => <TabBar {...props} />}>
         <Tab.Screen name={Routes.Home} component={ArticlesList} />
         <Tab.Screen name={Routes.Home2} component={ArticlesList} />
