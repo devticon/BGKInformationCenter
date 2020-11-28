@@ -12,11 +12,11 @@ export const gun = Gun({
 });
 
 export async function getOnce(path: string): Promise<any> {
-  return new Promise(resolve =>
+  return new Promise(resolve => {
     gun.get(path).once(data => {
       resolve(data!);
-    }),
-  );
+    });
+  });
 }
 
 export async function getMany(path: string): Promise<any[]> {

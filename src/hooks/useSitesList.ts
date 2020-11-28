@@ -1,15 +1,19 @@
 import { useEffect, useState } from 'react';
+import { useAuthContext } from '../contexts';
 import { watchMany } from '../gun';
 import { Site } from '../models';
 
 export function useSitesLists() {
   const [sites, setSites] = useState<Site[]>([]);
+  const { userId } = useAuthContext();
 
   useEffect(() => {
-    watchMany('me/sites', _sites => {
-      setSites(_sites.filter(Boolean));
-    });
-  }, []);
+    if (userId) {
+      watchMany(`${userId}/sites`, _sites => {
+        setSites(_sites.filter(Boolean));
+      });
+    }
+  }, [userId]);
 
   return sites;
 }

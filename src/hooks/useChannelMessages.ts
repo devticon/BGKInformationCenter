@@ -8,6 +8,7 @@ export function useChannelMessages(teamId: string, channelId: string) {
   const { userId } = useAuthContext();
 
   useEffect(() => {
+    setMessages([]);
     watchMany(`teams/${teamId}/channels/${channelId}/messages`, async _messages => {
       setMessages(_messages.filter(Boolean));
     });

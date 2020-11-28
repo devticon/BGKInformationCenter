@@ -1,11 +1,13 @@
 import { useEffect, useState } from 'react';
+import { useAuthContext } from '../contexts';
 import { getMany, watchMany } from '../gun';
 
 export function useTeamsLists() {
   const [teams, setTeams] = useState<any[]>([]);
+  const { userId } = useAuthContext();
 
   useEffect(() => {
-    watchMany('me/teams', async teams => {
+    watchMany(`${userId}/teams`, async teams => {
       teams = teams.filter(Boolean);
 
       for (const team of teams) {
@@ -14,7 +16,6 @@ export function useTeamsLists() {
         } else {
           team.channels = [];
         }
-        console.log(team.members);
         if (team.members && team.members['#']) {
           team.members = await getMany(team.members['#']);
         } else {
@@ -24,7 +25,7 @@ export function useTeamsLists() {
 
       setTeams(teams);
     });
-  }, []);
+  }, [userId]);
 
   return teams;
 }
