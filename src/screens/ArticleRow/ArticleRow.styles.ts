@@ -4,7 +4,7 @@ import { StyleSheet } from 'react-native';
 export const styles = StyleSheet.create({
   row: {
     paddingHorizontal: gutterLarge,
-    paddingVertical: gutterMedium,
+    paddingVertical: gutter,
     flexDirection: 'row',
   },
   left: {

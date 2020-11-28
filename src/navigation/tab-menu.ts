@@ -11,11 +11,11 @@ export const tabMenu: Tab[] = [
     route: Routes.Home,
   },
   {
-    icon: 'bookmark-outline',
+    icon: 'newspaper-outline',
     route: Routes.Home2,
   },
   {
-    icon: 'add-circle-outline',
+    icon: 'chatbox-outline',
     route: Routes.Home3,
   },
   {

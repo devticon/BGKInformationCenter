@@ -1,6 +1,7 @@
 import { Icon, Text } from '@components';
 import React, { FC } from 'react';
 import { Modal, Pressable, View } from 'react-native';
+import { useAuthContext } from '../../../contexts/AuthContext';
 import { styles } from './UserMenu.styles';
 
 type Props = {
@@ -8,6 +9,13 @@ type Props = {
 };
 
 const UserMenu: FC<Props> = ({ onClose }) => {
+  const { logout } = useAuthContext();
+
+  const handleLogout = () => {
+    logout();
+    onClose();
+  };
+
   return (
     <Modal transparent onRequestClose={onClose}>
       <View style={styles.modal}>
@@ -19,7 +27,9 @@ const UserMenu: FC<Props> = ({ onClose }) => {
           </Pressable>
           <Pressable style={styles.item}>
             <Icon style={styles.itemIcon} name="log-out-outline" />
-            <Text style={styles.itemText}>Wyloguj</Text>
+            <Text style={styles.itemText} onPress={handleLogout}>
+              Wyloguj
+            </Text>
           </Pressable>
         </View>
       </View>

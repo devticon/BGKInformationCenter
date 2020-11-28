@@ -1,31 +1,28 @@
-import 'react-native-gesture-handler';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
-import React, { FC, useEffect } from 'react';
-import { gun } from './gun';
+import React, { FC } from 'react';
+import { View } from 'react-native';
+import 'react-native-gesture-handler';
+import { AuthContextProvider } from './contexts/AuthContext';
 import Header from './navigation/Header/Header';
 import { Routes } from './navigation/routes';
 import TabBar from './navigation/TabBar/TabBar';
-import ArticlesList from './screens/ArticlesList/ArticlesList';
+import ListsScreen from './screens/ListsScreen/ListsScreen';
 
 const Tab = createBottomTabNavigator();
 
 const App: FC = () => {
-  useEffect(() => {
-    gun.get('me').on(user => {
-      console.log(user.displayName);
-    });
-  }, []);
-
   return (
     <NavigationContainer>
-      <Header />
-      <Tab.Navigator tabBar={props => <TabBar {...props} />}>
-        <Tab.Screen name={Routes.Home} component={ArticlesList} />
-        <Tab.Screen name={Routes.Home2} component={ArticlesList} />
-        <Tab.Screen name={Routes.Home3} component={ArticlesList} />
-        <Tab.Screen name={Routes.Home4} component={ArticlesList} />
-      </Tab.Navigator>
+      <AuthContextProvider>
+        <Header />
+        <Tab.Navigator tabBar={props => <TabBar {...props} />}>
+          <Tab.Screen name={Routes.Home} component={ListsScreen} />
+          <Tab.Screen name={Routes.Home2} component={View} />
+          <Tab.Screen name={Routes.Home3} component={View} />
+          <Tab.Screen name={Routes.Home4} component={View} />
+        </Tab.Navigator>
+      </AuthContextProvider>
     </NavigationContainer>
   );
 };

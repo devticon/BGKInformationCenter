@@ -1,25 +1,15 @@
 import { Button } from '@components';
 import React, { FC, useState } from 'react';
 import { Image, Pressable, View } from 'react-native';
-import { authorize } from 'react-native-app-auth';
-import logo from '../../../assets/images/logo.png';
 import avatar from '../../../assets/images/avatar.png';
-import { authConfig } from '../../auth';
+import logo from '../../../assets/images/logo.png';
+import { useAuthContext } from '../../contexts/AuthContext';
 import { styles } from './Header.styles';
 import UserMenu from './UserMenu/UserMenu';
 
 const Header: FC = () => {
-  const isAuthenticated = true;
+  const { isAuthenticated, login } = useAuthContext();
   const [userMenuVisible, setUserMenuVisible] = useState(false);
-
-  const handleLogin = async () => {
-    try {
-      const authState = await authorize(authConfig);
-      console.log(authState.accessToken);
-    } catch (error) {
-      console.error(error);
-    }
-  };
 
   return (
     <View style={styles.header}>
@@ -32,7 +22,7 @@ const Header: FC = () => {
             <Image source={avatar} style={styles.avatar} />
           </Pressable>
         ) : (
-          <Button variant="outlined" text="Zaloguj" onPress={handleLogin} />
+          <Button variant="outlined" text="Zaloguj" onPress={login} />
         )}
       </View>
 
