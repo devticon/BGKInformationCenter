@@ -6,6 +6,8 @@ export function useChannelMessages(teamId: string, channelId: string) {
 
   useEffect(() => {
     getMany(`me/teams/${teamId}/channels/${channelId}/messages`).then(async messages => {
+      messages = messages.filter(Boolean);
+
       for (const message of messages) {
         if (message.body && message.body['#']) {
           message.body = await getOnce(message.body['#']);
