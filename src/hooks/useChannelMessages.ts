@@ -9,9 +9,14 @@ export function useChannelMessages(teamId: string, channelId: string) {
 
   useEffect(() => {
     setMessages([]);
-    watchMany(`teams/${teamId}/channels/${channelId}/messages`, async _messages => {
+
+    const unsubscribe = watchMany(`teams/${teamId}/channels/${channelId}/messages`, async _messages => {
+      _messages = _messages.filter(Boolean);
+      _messages.sort((a, b) => a.createdDateTime.localeCompare(b.createdDateTime));
       setMessages(_messages.filter(Boolean));
     });
+
+    return () => unsubscribe();
   }, [channelId, teamId]);
 
   const sendMessage = useCallback(

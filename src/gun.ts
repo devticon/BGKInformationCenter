@@ -34,7 +34,9 @@ export async function getMany(path: string): Promise<any[]> {
 }
 
 export function watchMany(path: string, callback: (data: any[]) => void) {
-  gun.get(path).on(list => {
+  const selector = gun.get(path);
+
+  selector.on(list => {
     if (!list) {
       callback([]);
     }
@@ -45,4 +47,6 @@ export function watchMany(path: string, callback: (data: any[]) => void) {
         .map(key => getOnce(list[key]['#'])),
     ).then(callback);
   });
+
+  return () => selector.off();
 }
