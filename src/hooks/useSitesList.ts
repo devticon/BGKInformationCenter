@@ -12,6 +12,8 @@ export function useSitesLists() {
       watchMany(`${userId}/sites`, _sites => {
         setSites(_sites.filter(Boolean));
       });
+    } else {
+      setSites([]);
     }
   }, [userId]);
 

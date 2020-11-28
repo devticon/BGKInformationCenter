@@ -28,6 +28,8 @@ export function useSharePointLists() {
 
         setLists(lists);
       });
+    } else {
+      setLists([]);
     }
   }, [userId]);
 

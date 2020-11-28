@@ -23,10 +23,12 @@ const UserMenu: FC<Props> = ({ onClose }) => {
         <View style={styles.wrapper}>
           <Text style={[styles.item, styles.itemText, { borderTopWidth: 0 }]}>{username}</Text>
           <Pressable style={styles.item}>
+            <Icon style={styles.itemIcon} name="information-circle-outline" />
+            <Text style={styles.itemText}>Pomoc</Text>
+          </Pressable>
+          <Pressable style={styles.item} onPress={handleLogout}>
             <Icon style={styles.itemIcon} name="log-out-outline" />
-            <Text style={styles.itemText} onPress={handleLogout}>
-              Wyloguj
-            </Text>
+            <Text style={styles.itemText}>Wyloguj</Text>
           </Pressable>
         </View>
       </View>

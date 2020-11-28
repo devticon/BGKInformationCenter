@@ -12,6 +12,8 @@ export function useUsersLists() {
       watchMany(`${userId}/users`, _users => {
         setUsers(_users.filter(Boolean));
       });
+    } else {
+      setUsers([]);
     }
   }, [userId]);
 

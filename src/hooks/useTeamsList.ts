@@ -7,24 +7,28 @@ export function useTeamsLists() {
   const { userId } = useAuthContext();
 
   useEffect(() => {
-    watchMany(`${userId}/teams`, async teams => {
-      teams = teams.filter(Boolean);
+    if (userId) {
+      watchMany(`${userId}/teams`, async teams => {
+        teams = teams.filter(Boolean);
 
-      for (const team of teams) {
-        if (team.channels && team.channels['#']) {
-          team.channels = await getMany(team.channels['#']);
-        } else {
-          team.channels = [];
+        for (const team of teams) {
+          if (team.channels && team.channels['#']) {
+            team.channels = await getMany(team.channels['#']);
+          } else {
+            team.channels = [];
+          }
+          if (team.members && team.members['#']) {
+            team.members = await getMany(team.members['#']);
+          } else {
+            team.members = [];
+          }
         }
-        if (team.members && team.members['#']) {
-          team.members = await getMany(team.members['#']);
-        } else {
-          team.members = [];
-        }
-      }
 
-      setTeams(teams);
-    });
+        setTeams(teams);
+      });
+    } else {
+      setTeams([]);
+    }
   }, [userId]);
 
   return teams;
