@@ -5,7 +5,7 @@ export interface Tab {
   route: Routes;
 }
 
-export const tabMenu: Tab[] = [
+export const tabs: Tab[] = [
   {
     icon: 'grid-outline',
     route: Routes.Lists,

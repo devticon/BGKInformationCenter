@@ -49,16 +49,7 @@ const ListsScreen: FC = () => {
       keyExtractor={item => item.id}
       renderItem={({ item, section }) => {
         if (section.template === 'documentLibrary') {
-          return (
-            <DocumentRow
-              document={{
-                id: item.id,
-                link: item.webUrl,
-                filename: item.fields.LinkFilename,
-                modified: item.fields.Modified,
-              }}
-            />
-          );
+          return <DocumentRow document={item} />;
         } else if (section.template === 'users') {
           return <UserRow user={item} />;
         } else if (section.template === 'sites') {

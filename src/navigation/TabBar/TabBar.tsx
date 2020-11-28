@@ -2,7 +2,7 @@ import { Button, Icon } from '@components';
 import { BottomTabBarProps } from '@react-navigation/bottom-tabs';
 import React, { FC } from 'react';
 import { View } from 'react-native';
-import { tabMenu } from '../tab-menu';
+import { tabs } from '../tabs';
 import { styles } from './TabBar.styles';
 
 const TabBar: FC<BottomTabBarProps> = ({ navigation, state, descriptors }) => {
@@ -17,7 +17,7 @@ const TabBar: FC<BottomTabBarProps> = ({ navigation, state, descriptors }) => {
 
   return (
     <View style={styles.tabsContainer}>
-      {tabMenu.map((tab, index) => {
+      {tabs.map((tab, index) => {
         const isActive = tab.route === activeTabRoute;
 
         return (
