@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
-import { useAuthContext } from '../contexts/AuthContext';
+import { useAuthContext } from '../contexts';
 import { gun, watchMany } from '../gun';
 import { Message } from '../models';
 

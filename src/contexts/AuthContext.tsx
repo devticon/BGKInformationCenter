@@ -22,10 +22,17 @@ export const AuthContextProvider: FC = ({ children }) => {
   const [username, setUsername] = useState('');
 
   useEffect(() => {
-    Promise.all([AsyncStorage.getItem('UserId'), AsyncStorage.getItem('Username')]).then(([id, username]) => {
-      setUserId(id || '');
-      setUsername(username || '');
-      setIsAuthenticated(!!id);
+    Promise.all([
+      AsyncStorage.getItem('AuthorizeResult'),
+      AsyncStorage.getItem('UserId'),
+      AsyncStorage.getItem('Username'),
+    ]).then(async ([authState, id, username]) => {
+      if (authState && id && username) {
+        await authenticate(JSON.parse(authState));
+        setUserId(id || '');
+        setUsername(username || '');
+        setIsAuthenticated(!!id);
+      }
     });
   }, []);
 

@@ -28,7 +28,7 @@ export async function getMany(path: string): Promise<any[]> {
 
   return Promise.all(
     Object.keys(list)
-      .filter(key => key !== '_')
+      .filter(key => key !== '_' && key !== '#')
       .map(key => getOnce(list[key]['#'])),
   );
 }
@@ -38,9 +38,10 @@ export function watchMany(path: string, callback: (data: any[]) => void) {
     if (!list) {
       callback([]);
     }
+
     Promise.all(
       Object.keys(list)
-        .filter(key => key !== '_')
+        .filter(key => key !== '_' && key !== '#')
         .map(key => getOnce(list[key]['#'])),
     ).then(callback);
   });
