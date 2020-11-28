@@ -3,8 +3,8 @@ import { CLIENT_ID, TENANT_ID } from '@env';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
 import React, { FC } from 'react';
-import { Button } from 'react-native';
 import { authorize } from 'react-native-app-auth';
+import Header from './navigation/Header/Header';
 import { Routes } from './navigation/routes';
 import TabBar from './navigation/TabBar/TabBar';
 import ArticlesList from './screens/ArticlesList/ArticlesList';
@@ -22,7 +22,7 @@ const App: FC = () => {
   const handleLogin = async () => {
     try {
       const authState = await authorize(config);
-      console.log(authState);
+      console.log(authState.accessToken);
     } catch (error) {
       console.error(error);
     }
@@ -30,7 +30,7 @@ const App: FC = () => {
 
   return (
     <NavigationContainer>
-      <Button title="Login" onPress={handleLogin} />
+      <Header />
       <Tab.Navigator tabBar={props => <TabBar {...props} />}>
         <Tab.Screen name={Routes.Home} component={ArticlesList} />
         <Tab.Screen name={Routes.Home2} component={ArticlesList} />
