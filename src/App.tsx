@@ -1,8 +1,9 @@
 import 'react-native-gesture-handler';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
-import React, { FC } from 'react';
+import React, { FC, useEffect } from 'react';
 import { View } from 'react-native';
+import RNBootSplash from 'react-native-bootsplash';
 import { AuthContextProvider } from './contexts/AuthContext';
 import Header from './navigation/Header/Header';
 import { Routes, TabParamList } from './navigation/routes';
@@ -15,6 +16,10 @@ import TeamsListScreen from './screens/TeamsListScreen/TeamsListScreen';
 const Tab = createBottomTabNavigator<TabParamList>();
 
 const App: FC = () => {
+  useEffect(() => {
+    RNBootSplash.hide({ fade: true }).catch();
+  }, []);
+
   return (
     <NavigationContainer>
       <AuthContextProvider>

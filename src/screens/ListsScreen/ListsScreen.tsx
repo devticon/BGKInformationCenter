@@ -20,7 +20,7 @@ const getSectionIcon = (template: string): string => {
 
 const ListsScreen: FC = () => {
   const lists = useSharePointLists();
-  const sections = lists.map(list => ({ ...list, data: list.items.length ? list.items : articles }));
+  const sections = lists.map(list => ({ ...list, data: list.items }));
 
   if (!lists?.length) {
     return <Spinner />;
