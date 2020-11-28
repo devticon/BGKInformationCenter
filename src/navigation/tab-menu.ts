@@ -8,18 +8,18 @@ export interface Tab {
 export const tabMenu: Tab[] = [
   {
     icon: 'grid-outline',
-    route: Routes.Home,
+    route: Routes.Lists,
   },
   {
     icon: 'newspaper-outline',
-    route: Routes.Home2,
+    route: Routes.News,
   },
   {
     icon: 'chatbox-outline',
-    route: Routes.Home3,
+    route: Routes.ThreadsList,
   },
   {
     icon: 'search-outline',
-    route: Routes.Home4,
+    route: Routes.Search,
   },
 ];

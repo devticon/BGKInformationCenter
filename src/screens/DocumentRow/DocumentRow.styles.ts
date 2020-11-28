@@ -1,4 +1,4 @@
-import { gutter, gutterLarge } from '@theme';
+import { fontSizes, fontWeights, gutter, gutterLarge } from '@theme';
 import { StyleSheet } from 'react-native';
 
 export const styles = StyleSheet.create({
@@ -6,5 +6,15 @@ export const styles = StyleSheet.create({
     paddingHorizontal: gutterLarge,
     paddingVertical: gutter,
     flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  filename: {
+    fontSize: fontSizes.normal,
+    fontFamily: fontWeights.SemiBold,
+  },
+  modified: {
+    fontSize: fontSizes.caption,
+    marginTop: gutter / 2,
   },
 });

@@ -31,28 +31,35 @@ const ListsScreen: FC = () => {
   }));
 
   return (
-    <SafeAreaView>
-      <SectionList
-        sections={sections}
-        contentContainerStyle={styles.list}
-        keyExtractor={(item, index) => item.id + index}
-        renderItem={({ item, section }) => {
-          if (section.template === 'documentLibrary') {
-            return <DocumentRow document={item} />;
-          } else {
-            return <ArticleRow article={item} />;
-          }
-        }}
-        renderSectionHeader={({ section }) => {
+    <SectionList
+      sections={sections}
+      contentContainerStyle={styles.list}
+      keyExtractor={(item, index) => item.id + index}
+      renderItem={({ item, section }) => {
+        if (section.template === 'documentLibrary') {
           return (
-            <View style={styles.title}>
-              <Icon name={getSectionIcon(section.template)} />
-              <Text style={styles.titleText}>{section.displayName}</Text>
-            </View>
+            <DocumentRow
+              document={{
+                id: item.id,
+                link: item.webUrl,
+                filename: item.fields.LinkFilename,
+                modified: item.fields.Modified,
+              }}
+            />
           );
-        }}
-      />
-    </SafeAreaView>
+        } else {
+          return <ArticleRow article={item} />;
+        }
+      }}
+      renderSectionHeader={({ section }) => {
+        return (
+          <View style={styles.title}>
+            <Icon name={getSectionIcon(section.template)} />
+            <Text style={styles.titleText}>{section.displayName}</Text>
+          </View>
+        );
+      }}
+    />
   );
 };
 

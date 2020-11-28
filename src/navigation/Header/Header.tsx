@@ -22,7 +22,7 @@ const Header: FC = () => {
             <Image source={avatar} style={styles.avatar} />
           </Pressable>
         ) : (
-          <Button variant="outlined" text="Zaloguj" onPress={login} />
+          <Button size="small" variant="outlined" text="Zaloguj" onPress={login} />
         )}
       </View>
 

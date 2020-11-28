@@ -1,11 +1,14 @@
-import { Text } from '@components';
+import { Button, Text } from '@components';
+import { formatDateTime } from '@utils';
 import React, { FC } from 'react';
-import { View } from 'react-native';
+import { Linking, View } from 'react-native';
 import { styles } from './DocumentRow.styles';
 
 type Document = {
   id: string;
-  webUrl: string;
+  modified: string;
+  filename: string;
+  link: string;
 };
 
 type Props = {
@@ -15,7 +18,11 @@ type Props = {
 const DocumentRow: FC<Props> = ({ document }) => {
   return (
     <View style={styles.row}>
-      <Text>Dokument {document.webUrl}</Text>
+      <View>
+        <Text style={styles.filename}>{document.filename}</Text>
+        <Text style={styles.modified}>Modyfikacja: {formatDateTime(document.modified)}</Text>
+      </View>
+      <Button size="small" text="Zobacz" onPress={() => Linking.openURL(document.link)} />
     </View>
   );
 };
