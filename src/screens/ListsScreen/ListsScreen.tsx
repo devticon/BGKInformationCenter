@@ -30,7 +30,7 @@ const ListsScreen: FC = () => {
     <SectionList
       sections={sections}
       contentContainerStyle={styles.list}
-      keyExtractor={(item, index) => item.id + index}
+      keyExtractor={item => item.id}
       renderItem={({ item, section }) => {
         if (section.template === 'documentLibrary') {
           return (
@@ -47,14 +47,12 @@ const ListsScreen: FC = () => {
           return <ArticleRow article={item} />;
         }
       }}
-      renderSectionHeader={({ section }) => {
-        return (
-          <View style={styles.title}>
-            <Icon name={getSectionIcon(section.template)} />
-            <Text style={styles.titleText}>{section.displayName}</Text>
-          </View>
-        );
-      }}
+      renderSectionHeader={({ section }) => (
+        <View style={styles.title}>
+          <Icon name={getSectionIcon(section.template)} />
+          <Text style={styles.titleText}>{section.displayName}</Text>
+        </View>
+      )}
     />
   );
 };

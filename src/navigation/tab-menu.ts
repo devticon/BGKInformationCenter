@@ -12,7 +12,7 @@ export const tabMenu: Tab[] = [
   },
   {
     icon: 'newspaper-outline',
-    route: Routes.News,
+    route: Routes.NewsList,
   },
   {
     icon: 'chatbox-outline',

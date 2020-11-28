@@ -16,16 +16,12 @@ const TeamsListScreen: FC = () => {
     <SectionList
       sections={sections}
       keyExtractor={item => item.id}
-      renderItem={({ item }) => {
-        return (
-          <Pressable>
-            <Text style={styles.channelName}># {item.displayName}</Text>
-          </Pressable>
-        );
-      }}
-      renderSectionHeader={({ section }) => {
-        return <Text style={styles.teamName}>{section.displayName}</Text>;
-      }}
+      renderItem={({ item }) => (
+        <Pressable>
+          <Text style={styles.channelName}># {item.displayName}</Text>
+        </Pressable>
+      )}
+      renderSectionHeader={({ section }) => <Text style={styles.teamName}>{section.displayName}</Text>}
     />
   );
 };
