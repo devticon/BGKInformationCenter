@@ -25,12 +25,15 @@ const ListsScreen: FC = () => {
     return <Spinner />;
   }
 
-  const xds = lists.map(list => ({ ...list, data: list.items || articles }));
+  const sections = lists.map(list => ({
+    ...list,
+    data: list.items.length ? list.items : articles,
+  }));
 
   return (
     <SafeAreaView>
       <SectionList
-        sections={xds}
+        sections={sections}
         contentContainerStyle={styles.list}
         keyExtractor={(item, index) => item.id + index}
         renderItem={({ item, section }) => {
