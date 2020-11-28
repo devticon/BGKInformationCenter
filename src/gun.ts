@@ -8,7 +8,11 @@ import asyncStore from 'gun/lib/ras.js';
 export const gun = Gun({ peers: ['https://devticon.loca.lt/gun'], store: asyncStore({ AsyncStorage }) });
 
 export async function getOnce(path: string): Promise<any> {
-  return new Promise(resolve => gun.get(path).once(data => resolve(data!)));
+  return new Promise(resolve =>
+    gun.get(path).once(data => {
+      resolve(data!);
+    }),
+  );
 }
 
 export async function getMany(path: string): Promise<any[]> {

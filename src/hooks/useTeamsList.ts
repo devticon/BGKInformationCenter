@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { getMany, getOnce } from '../gun';
+import { getMany } from '../gun';
 
 export function useTeamsLists() {
   const [teams, setTeams] = useState<any[]>([]);
