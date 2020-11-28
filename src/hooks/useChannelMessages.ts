@@ -1,8 +1,10 @@
-import { useEffect, useState } from 'react';
-import { getMany } from '../gun';
+import { useCallback, useEffect, useState } from 'react';
+import { useAuthContext } from '../contexts/AuthContext';
+import { getMany, gun } from '../gun';
 
 export function useChannelMessages(teamId: string, channelId: string) {
   const [messages, setMessages] = useState<any[]>([]);
+  const { userId } = useAuthContext();
 
   useEffect(() => {
     getMany(`teams/${teamId}/channels/${channelId}/messages`).then(async messages => {
@@ -11,5 +13,13 @@ export function useChannelMessages(teamId: string, channelId: string) {
     });
   }, [channelId, teamId]);
 
-  return messages;
+  const sendMessage = useCallback(
+    (content: string) => {
+      const payload = { content, userId };
+      gun.get(`teams`).get(teamId).get('channels').get(channelId).get('messages-to-sync').set(payload);
+    },
+    [channelId, teamId, userId],
+  );
+
+  return { messages, sendMessage };
 }
