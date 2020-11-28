@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
-import { getMany, getOnce } from '../gun';
+import { getMany, getOnce, watchMany } from '../gun';
 
 export function useSharePointLists() {
   const [lists, setLists] = useState<any[]>([]);
 
   useEffect(() => {
-    getMany('me/sharepoint/lists').then(async lists => {
+    watchMany('me/sharepoint/lists', async lists => {
       for (const list of lists) {
         if (list.items && list.items['#']) {
           list.items = await getMany(list.items['#']);

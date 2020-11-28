@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
-import { getMany } from '../gun';
+import { getMany, watchMany } from '../gun';
 
 export function useTeamsLists() {
   const [teams, setTeams] = useState<any[]>([]);
 
   useEffect(() => {
-    getMany('me/teams').then(async teams => {
+    watchMany('me/teams', async teams => {
       teams = teams.filter(Boolean);
 
       for (const team of teams) {
@@ -14,6 +14,7 @@ export function useTeamsLists() {
         } else {
           team.channels = [];
         }
+        console.log(team.members);
         if (team.members && team.members['#']) {
           team.members = await getMany(team.members['#']);
         } else {

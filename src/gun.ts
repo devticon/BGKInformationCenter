@@ -41,9 +41,7 @@ export function watchMany(path: string, callback: (data: any[]) => void) {
     Promise.all(
       Object.keys(list)
         .filter(key => key !== '_')
-        .map(key => {
-          return getOnce(list[key]['#']);
-        }),
+        .map(key => getOnce(list[key]['#'])),
     ).then(callback);
   });
 }

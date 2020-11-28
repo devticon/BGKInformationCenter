@@ -1,10 +1,12 @@
 import { Icon, Spinner, Text } from '@components';
-import React, { FC } from 'react';
+import React, { FC, useMemo } from 'react';
 import { SectionList, View } from 'react-native';
 import { useSharePointLists } from '../../hooks/useSharePointLists';
+import { useUsersLists } from '../../hooks/useUsersList';
 import ArticleRow from '../NewsListScreen/ArticleRow/ArticleRow';
 import DocumentRow from './DocumentRow/DocumentRow';
 import { styles } from './ListsScreen.styles';
+import UserRow from './UserRow/UserRow';
 
 const getSectionIcon = (template: string): string => {
   switch (template) {
@@ -12,6 +14,8 @@ const getSectionIcon = (template: string): string => {
       return 'calendar-outline';
     case 'documentLibrary':
       return 'documents-outline';
+    case 'users':
+      return 'people-outline';
     default:
       return 'apps-outline';
   }
@@ -19,7 +23,14 @@ const getSectionIcon = (template: string): string => {
 
 const ListsScreen: FC = () => {
   const lists = useSharePointLists();
-  const sections = lists.map(list => ({ ...list, data: list.items }));
+  const users = useUsersLists();
+
+  const sections = useMemo(() => {
+    return [
+      ...lists.map(list => ({ ...list, data: list.items })),
+      { template: 'users', displayName: 'Użytkownicy', data: users },
+    ];
+  }, [lists, users]);
 
   if (!lists?.length) {
     return <Spinner />;
@@ -42,6 +53,8 @@ const ListsScreen: FC = () => {
               }}
             />
           );
+        } else if (section.template === 'users') {
+          return <UserRow user={item} />;
         } else {
           return <ArticleRow article={item} />;
         }

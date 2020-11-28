@@ -1,13 +1,13 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useAuthContext } from '../contexts/AuthContext';
-import { getMany, gun } from '../gun';
+import { gun, watchMany } from '../gun';
 
 export function useChannelMessages(teamId: string, channelId: string) {
   const [messages, setMessages] = useState<any[]>([]);
   const { userId } = useAuthContext();
 
   useEffect(() => {
-    getMany(`teams/${teamId}/channels/${channelId}/messages`).then(async messages => {
+    watchMany(`teams/${teamId}/channels/${channelId}/messages`, async messages => {
       messages = messages.filter(Boolean);
       setMessages(messages);
     });

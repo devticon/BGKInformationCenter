@@ -5,11 +5,20 @@ export const styles = StyleSheet.create({
   container: {
     padding: gutterLarge,
   },
-  message: {
+  messageWrapper: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginVertical: gutter / 2,
+  },
+  messageText: {
     backgroundColor: colors.white,
     borderRadius: borderRadiusBase,
-    marginBottom: gutter,
     padding: gutter,
+  },
+  messageInfoText: {
+    fontSize: 10,
+    marginHorizontal: gutter,
+    opacity: 0.5,
   },
   input: {
     flex: 1,
