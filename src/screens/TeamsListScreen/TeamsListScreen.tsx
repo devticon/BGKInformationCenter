@@ -1,16 +1,22 @@
-import { Spinner, Text } from '@components';
+import { LoginRequired, Spinner, Text } from '@components';
 import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 import { useNavigation } from '@react-navigation/native';
 import React, { FC } from 'react';
 import { Pressable, SectionList } from 'react-native';
 import { useTeamsLists } from '@hooks';
+import { useAuthContext } from '../../contexts';
 import { Routes, TabParamList } from '../../navigation/routes';
 import { styles } from './TeamsListScreen.styles';
 
 const TeamsListScreen: FC = () => {
+  const { isAuthenticated } = useAuthContext();
   const { navigate } = useNavigation<BottomTabNavigationProp<TabParamList, Routes.TeamsList>>();
   const teams = useTeamsLists();
   const sections = teams.map(team => ({ ...team, data: team.channels }));
+
+  if (!isAuthenticated) {
+    return <LoginRequired text="Do korzystania z chatu wymagane jest zalogowanie się" />;
+  }
 
   if (!teams?.length) {
     return <Spinner />;

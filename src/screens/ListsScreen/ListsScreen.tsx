@@ -1,9 +1,10 @@
-import { Icon, Spinner, Text } from '@components';
+import { Icon, LoginRequired, Spinner, Text } from '@components';
 import React, { FC, useMemo } from 'react';
 import { SectionList, View } from 'react-native';
 import { useSharePointLists } from '@hooks';
 import { useSitesLists } from '@hooks';
 import { useUsersLists } from '@hooks';
+import { useAuthContext } from '../../contexts';
 import ArticleRow from '../NewsListScreen/ArticleRow/ArticleRow';
 import DocumentRow from './DocumentRow/DocumentRow';
 import { styles } from './ListsScreen.styles';
@@ -26,6 +27,7 @@ const getSectionIcon = (template: string): string => {
 };
 
 const ListsScreen: FC = () => {
+  const { isAuthenticated } = useAuthContext();
   const lists = useSharePointLists();
   const users = useUsersLists();
   const sites = useSitesLists();
@@ -37,6 +39,10 @@ const ListsScreen: FC = () => {
       { template: 'users', displayName: 'Użytkownicy', data: users },
     ];
   }, [lists, sites, users]);
+
+  if (!isAuthenticated) {
+    return <LoginRequired text="Do przeglądania tablicy wymagane jest zalogowanie się" />;
+  }
 
   if (!lists?.length) {
     return <Spinner />;

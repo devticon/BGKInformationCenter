@@ -25,8 +25,8 @@ const App: FC = () => {
       <AuthContextProvider>
         <Header />
         <Tab.Navigator tabBar={props => <TabBar {...props} />}>
-          <Tab.Screen name={Routes.Lists} component={ListsScreen} />
           <Tab.Screen name={Routes.NewsList} component={NewsListScreen} />
+          <Tab.Screen name={Routes.Lists} component={ListsScreen} />
           <Tab.Screen name={Routes.TeamsList} component={TeamsListScreen} />
           <Tab.Screen name={Routes.Search} component={View} />
           <Tab.Screen name={Routes.Chat} component={ChatScreen} options={{ tabBarVisible: false }} />
