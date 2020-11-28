@@ -19,7 +19,7 @@ const DocumentRow: FC<Props> = ({ document }) => {
   return (
     <View style={styles.row}>
       <View>
-        <Text style={styles.filename}>{document.filename}</Text>
+        <Text style={styles.name}>{document.filename}</Text>
         <Text style={styles.modified}>Modyfikacja: {formatDateTime(document.modified)}</Text>
       </View>
       <Button size="small" text="Zobacz" onPress={() => Linking.openURL(document.link)} />
