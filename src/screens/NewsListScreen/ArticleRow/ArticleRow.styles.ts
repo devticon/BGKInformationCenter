@@ -32,6 +32,5 @@ export const styles = StyleSheet.create({
   image: {
     width: '100%',
     height: 104,
-    backgroundColor: colors.primary,
   },
 });
