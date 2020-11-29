@@ -13,6 +13,7 @@ export function useTeamsLists() {
       const subscription = observeGun(`${userId}/teams`)
         .pipe(
           switchMap(_teams => {
+            _teams = _teams.filter(Boolean);
             const teamPaths = getPaths(_teams);
             return combineLatest(
               teamPaths.map(path =>

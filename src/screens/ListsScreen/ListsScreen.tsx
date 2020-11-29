@@ -37,7 +37,9 @@ const ListsScreen: FC = () => {
       ...lists.map(list => ({ ...list, data: list.items })),
       sites.length && { template: 'sites', displayName: 'Strony', data: sites },
       users.length && { template: 'users', displayName: 'Użytkownicy', data: users },
-    ].filter(Boolean);
+    ]
+      .filter(Boolean)
+      .filter(({ data }) => data.length);
   }, [lists, sites, users]);
 
   if (!isAuthenticated) {
