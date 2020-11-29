@@ -22,8 +22,8 @@ export function getPaths(list: any): string[] {
 
 export async function promiseGun(path: string): Promise<any> {
   return new Promise(resolve => {
-    console.log('once', path);
     gun.get(path).once(data => {
+      console.log('once', path);
       resolve(data!);
     });
   });
@@ -46,7 +46,7 @@ export function observeGun(path: string): Observable<any> {
   });
 }
 
-export function observeGunMany(path: string, observeLeaves = false): Observable<any[]> {
+export function observeGunMany(path: string, observeLeaves = true): Observable<any[]> {
   return observeGun(path).pipe(
     switchMap(list => {
       if (!list) {
