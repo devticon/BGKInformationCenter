@@ -19,7 +19,11 @@ export function useSharePointLists() {
                 observeGun(path).pipe(
                   switchMap(list => {
                     if (list.items && list.items['#']) {
-                      return observeGunMany(list.items['#']).pipe(map(items => ({ ...list, items })));
+                      return observeGunMany(list.items['#']).pipe(
+                        map(items => {
+                          return { ...list, items: items.filter(Boolean) };
+                        }),
+                      );
                     } else {
                       return of({ ...list, items: [] });
                     }

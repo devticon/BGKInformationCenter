@@ -19,7 +19,11 @@ export function useTeamsLists() {
                 observeGun(path).pipe(
                   switchMap(team => {
                     if (team.channels && team.channels['#']) {
-                      return observeGunMany(team.channels['#']).pipe(map(channels => ({ ...team, channels })));
+                      return observeGunMany(team.channels['#']).pipe(
+                        map(channels => {
+                          return { ...team, channels: channels.filter(Boolean) };
+                        }),
+                      );
                     } else {
                       return of({ ...team, channels: [] });
                     }
