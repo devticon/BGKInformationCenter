@@ -35,16 +35,16 @@ const ListsScreen: FC = () => {
   const sections = useMemo(() => {
     return [
       ...lists.map(list => ({ ...list, data: list.items })),
-      { template: 'sites', displayName: 'Strony', data: sites },
-      { template: 'users', displayName: 'Użytkownicy', data: users },
-    ];
+      sites.length && { template: 'sites', displayName: 'Strony', data: sites },
+      users.length && { template: 'users', displayName: 'Użytkownicy', data: users },
+    ].filter(Boolean);
   }, [lists, sites, users]);
 
   if (!isAuthenticated) {
     return <LoginRequired text="Do przeglądania tablicy wymagane jest zalogowanie się" />;
   }
 
-  if (!lists?.length) {
+  if (!sections?.length) {
     return <Spinner />;
   }
 

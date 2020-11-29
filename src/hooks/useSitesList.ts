@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useAuthContext } from '../contexts';
-import { watchMany } from '../gun';
+import { observeGunMany } from '../gun';
 import { Site } from '../models';
 
 export function useSitesLists() {
@@ -9,9 +9,11 @@ export function useSitesLists() {
 
   useEffect(() => {
     if (userId) {
-      watchMany(`${userId}/sites`, _sites => {
+      const subscription = observeGunMany(`${userId}/sites`).subscribe(_sites => {
         setSites(_sites.filter(Boolean));
       });
+
+      return () => subscription.unsubscribe();
     } else {
       setSites([]);
     }

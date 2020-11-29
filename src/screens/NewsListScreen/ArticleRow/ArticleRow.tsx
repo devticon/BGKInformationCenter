@@ -20,7 +20,7 @@ const ArticleRow: FC<Props> = ({ article }) => {
         <View style={[flexRow, flexAlignCenter, margin.small.top]}>
           {!!article.channel_icon && <Image style={styles.favicon} source={{ uri: article.channel_icon }} />}
           <Text style={styles.footer}>
-            {formatDate(article.pubDate)} / {article.channel_name}
+            {formatDate(article.isoDate)} / {article.channel_name}
           </Text>
         </View>
       </View>

@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
+import { combineLatest, of } from 'rxjs';
+import { map, switchMap } from 'rxjs/operators';
 import { useAuthContext } from '../contexts';
-import { getMany, getOnce, watchMany } from '../gun';
+import { getMany, getPaths, observeGun, observeGunMany, promiseGun, watchMany } from '../gun';
 
 export function useSharePointLists() {
   const [lists, setLists] = useState<any[]>([]);
@@ -18,7 +20,7 @@ export function useSharePointLists() {
 
             for (const item of list.items) {
               if (item.fields && item.fields['#']) {
-                item.fields = await getOnce(item.fields['#']);
+                item.fields = await promiseGun(item.fields['#']);
               }
             }
           } else {

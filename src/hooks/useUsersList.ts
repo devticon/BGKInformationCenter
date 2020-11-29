@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useAuthContext } from '../contexts';
-import { watchMany } from '../gun';
+import { observeGunMany } from '../gun';
 import { User } from '../models';
 
 export function useUsersLists() {
@@ -9,9 +9,11 @@ export function useUsersLists() {
 
   useEffect(() => {
     if (userId) {
-      watchMany(`${userId}/users`, _users => {
+      const subscription = observeGunMany(`${userId}/users`).subscribe(_users => {
         setUsers(_users.filter(Boolean));
       });
+
+      return () => subscription.unsubscribe();
     } else {
       setUsers([]);
     }

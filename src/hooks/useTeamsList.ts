@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
+import { combineLatest, of } from 'rxjs';
+import { map, switchMap } from 'rxjs/operators';
 import { useAuthContext } from '../contexts';
-import { getMany, watchMany } from '../gun';
+import { getPaths, observeGun, observeGunMany } from '../gun';
 
 export function useTeamsLists() {
   const [teams, setTeams] = useState<any[]>([]);
@@ -8,24 +10,28 @@ export function useTeamsLists() {
 
   useEffect(() => {
     if (userId) {
-      watchMany(`${userId}/teams`, async teams => {
-        teams = teams.filter(Boolean);
+      const subscription = observeGun(`${userId}/teams`)
+        .pipe(
+          switchMap(_teams => {
+            const teamPaths = getPaths(_teams);
+            return combineLatest(
+              teamPaths.map(path =>
+                observeGun(path).pipe(
+                  switchMap(team => {
+                    if (team.channels && team.channels['#']) {
+                      return observeGunMany(team.channels['#']).pipe(map(channels => ({ ...team, channels })));
+                    } else {
+                      return of(team);
+                    }
+                  }),
+                ),
+              ),
+            );
+          }),
+        )
+        .subscribe(data => setTeams(data));
 
-        for (const team of teams) {
-          if (team.channels && team.channels['#']) {
-            team.channels = await getMany(team.channels['#']);
-          } else {
-            team.channels = [];
-          }
-          if (team.members && team.members['#']) {
-            team.members = await getMany(team.members['#']);
-          } else {
-            team.members = [];
-          }
-        }
-
-        setTeams(teams);
-      });
+      return () => subscription.unsubscribe();
     } else {
       setTeams([]);
     }
