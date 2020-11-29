@@ -7,7 +7,7 @@ export function useArticlesList() {
 
   useEffect(() => {
     const subscription = observeGunMany('rss').subscribe(_articles => {
-      _articles = _articles.filter(a => a?.isoDate);
+      _articles = _articles.filter(Boolean);
       _articles.sort((a, b) => b.isoDate.localeCompare(a.isoDate));
       setArticles(_articles);
     });

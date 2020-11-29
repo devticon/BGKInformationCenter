@@ -5,7 +5,7 @@ import 'gun/lib/radix.js';
 import 'gun/lib/radisk.js';
 import 'gun/lib/store.js';
 import asyncStore from 'gun/lib/ras.js';
-import { combineLatest, Observable } from 'rxjs';
+import { combineLatest, Observable, of } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 
 export const gun = Gun({
@@ -16,7 +16,8 @@ export const gun = Gun({
 export function getPaths(list: any): string[] {
   return Object.keys(list)
     .filter(key => key !== '_' && key !== '#')
-    .map(key => list[key]['#']);
+    .map(key => list?.[key]?.['#'])
+    .filter(Boolean);
 }
 
 export async function promiseGun(path: string): Promise<any> {
@@ -38,6 +39,10 @@ export function observeGun(path: string): Observable<any> {
 export function observeGunMany(path: string, observeLeaves = false): Observable<any[]> {
   return observeGun(path).pipe(
     switchMap(list => {
+      if (!list) {
+        return of([]);
+      }
+
       const paths = getPaths(list);
       return combineLatest(paths.map(_path => (observeLeaves ? observeGun(_path) : promiseGun(_path))));
     }),
