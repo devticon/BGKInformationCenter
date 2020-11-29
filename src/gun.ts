@@ -23,7 +23,7 @@ export function getPaths(list: any): string[] {
 export async function promiseGun(path: string): Promise<any> {
   return new Promise(resolve => {
     gun.get(path).once(data => {
-      console.log('once', path);
+      // console.log('once', path);
       resolve(data!);
     });
   });
@@ -31,16 +31,16 @@ export async function promiseGun(path: string): Promise<any> {
 
 export function observeGun(path: string): Observable<any> {
   return new Observable(subscriber => {
-    console.log('on  ', path);
+    // console.log('on  ', path);
     const selector = gun.get(path);
 
     selector.on(data => {
-      console.log('data', path);
+      // console.log('data', path);
       subscriber.next(data);
     });
 
     return () => {
-      console.log('xon ', path);
+      // console.log('xon ', path);
       selector.off();
     };
   });
