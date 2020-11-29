@@ -12,7 +12,7 @@ export function useChannelMessages(teamId: string, channelId: string) {
 
     const subscription = observeGunMany(`teams/${teamId}/channels/${channelId}/messages`).subscribe(_messages => {
       _messages = _messages.filter(Boolean);
-      _messages.sort((a, b) => a.createdDateTime.localeCompare(b.createdDateTime));
+      _messages.sort((a, b) => a.createdDateTime?.localeCompare(b.createdDateTime));
       setMessages(_messages);
     });
 
