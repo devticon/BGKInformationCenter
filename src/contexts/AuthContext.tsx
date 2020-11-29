@@ -28,7 +28,7 @@ export const AuthContextProvider: FC = ({ children }) => {
       AsyncStorage.getItem('Username'),
     ]).then(async ([authState, id, username]) => {
       if (authState && id && username) {
-        await authenticate(JSON.parse(authState));
+        authenticate(JSON.parse(authState)).catch();
         setUserId(id || '');
         setUsername(username || '');
         setIsAuthenticated(!!id);

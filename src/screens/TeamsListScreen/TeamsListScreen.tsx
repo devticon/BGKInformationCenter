@@ -1,9 +1,9 @@
 import { LoginRequired, Spinner, Text } from '@components';
+import { useTeamsLists } from '@hooks';
 import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 import { useNavigation } from '@react-navigation/native';
 import React, { FC } from 'react';
 import { Pressable, SectionList } from 'react-native';
-import { useTeamsLists } from '@hooks';
 import { useAuthContext } from '../../contexts';
 import { Routes, TabParamList } from '../../navigation/routes';
 import { styles } from './TeamsListScreen.styles';

@@ -11,6 +11,7 @@ export const styles = StyleSheet.create({
     backgroundColor: colors.white,
     borderRadius: borderRadiusBase,
     padding: gutter,
+    flexShrink: 1,
   },
   messageInfoText: {
     fontSize: 10,
