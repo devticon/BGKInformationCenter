@@ -5,8 +5,10 @@ import { useSharePointLists } from '@hooks';
 import { useSitesLists } from '@hooks';
 import { useUsersLists } from '@hooks';
 import { useAuthContext } from '../../contexts';
+import { Event } from '../../models';
 import ArticleRow from '../NewsListScreen/ArticleRow/ArticleRow';
 import DocumentRow from './DocumentRow/DocumentRow';
+import EventRow from './EventRow/EventRow';
 import { styles } from './ListsScreen.styles';
 import SiteRow from './SiteRow/SiteRow';
 import UserRow from './UserRow/UserRow';
@@ -26,6 +28,30 @@ const getSectionIcon = (template: string): string => {
   }
 };
 
+const events: Event[] = [
+  {
+    id: '1x',
+    title: 'Spotkanie zarządu',
+    start: '2020-12-07T14:00:00.000Z',
+    end: '2020-12-07T17:00:00.000Z',
+    location: 'Łódź',
+  },
+  {
+    id: 'x2',
+    title: 'Spotkanie integracyjne',
+    start: '2020-12-09T14:00:00.000Z',
+    end: '2020-12-09T17:00:00.000Z',
+    location: 'Kraków',
+  },
+  {
+    id: '3x',
+    title: 'Spotkanie zarządu',
+    start: '2020-12-17T09:00:00.000Z',
+    end: '2020-12-17T11:00:00.000Z',
+    location: 'Warszawa',
+  },
+];
+
 const ListsScreen: FC = () => {
   const { isAuthenticated } = useAuthContext();
   const lists = useSharePointLists();
@@ -35,6 +61,7 @@ const ListsScreen: FC = () => {
   const sections = useMemo(() => {
     return [
       ...lists.map(list => ({ ...list, data: list.items })),
+      { template: 'events', displayName: 'Wydarzenia', data: events },
       sites.length && { template: 'sites', displayName: 'Strony', data: sites },
       users.length && { template: 'users', displayName: 'Użytkownicy', data: users },
     ]
@@ -62,6 +89,8 @@ const ListsScreen: FC = () => {
           return <UserRow user={item} />;
         } else if (section.template === 'sites') {
           return <SiteRow site={item} />;
+        } else if (section.template === 'events') {
+          return <EventRow event={item} />;
         } else {
           return <ArticleRow article={item} />;
         }

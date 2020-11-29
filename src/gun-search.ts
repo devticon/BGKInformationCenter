@@ -52,8 +52,7 @@ export async function search(rootId, query) {
         .filter(
           i =>
             i.title.toLowerCase().includes(query) ||
-            (i.contentSnippet && i.contentSnippet.toLowerCase().includes(query)) ||
-            (i.content && i.content.toLowerCase().includes(query)),
+            (i.contentSnippet && i.contentSnippet.toLowerCase().includes(query)),
         )
         .map(i => ({
           ...i,
