@@ -13,7 +13,6 @@ export function useSharePointLists() {
       const subscription = observeGun(`${userId}/sharepoint/lists`)
         .pipe(
           switchMap(_lists => {
-            _lists = _lists.filter(Boolean);
             const listPaths = getPaths(_lists);
             return combineLatest(
               listPaths.map(path =>
