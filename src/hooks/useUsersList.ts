@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { debounceTime } from 'rxjs/operators';
 import { useAuthContext } from '../contexts';
 import { observeGunMany } from '../gun';
 import { User } from '../models';
@@ -9,9 +10,9 @@ export function useUsersLists() {
 
   useEffect(() => {
     if (userId) {
-      const subscription = observeGunMany(`${userId}/users`).subscribe(_users => {
-        setUsers(_users.filter(Boolean));
-      });
+      const subscription = observeGunMany(`${userId}/users`)
+        .pipe(debounceTime(500))
+        .subscribe(_users => setUsers(_users.filter(Boolean)));
 
       return () => subscription.unsubscribe();
     } else {

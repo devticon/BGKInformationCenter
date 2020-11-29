@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { combineLatest, of } from 'rxjs';
-import { map, switchMap } from 'rxjs/operators';
+import { debounceTime, map, switchMap } from 'rxjs/operators';
 import { useAuthContext } from '../contexts';
 import { getPaths, observeGun, observeGunMany } from '../gun';
 
@@ -21,13 +21,14 @@ export function useTeamsLists() {
                     if (team.channels && team.channels['#']) {
                       return observeGunMany(team.channels['#']).pipe(map(channels => ({ ...team, channels })));
                     } else {
-                      return of(team);
+                      return of({ ...team, channels: [] });
                     }
                   }),
                 ),
               ),
             );
           }),
+          debounceTime(500),
         )
         .subscribe(data => setTeams(data));
 

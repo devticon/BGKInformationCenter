@@ -1,3 +1,4 @@
+import { Spinner } from '@components';
 import { RouteProp, useRoute } from '@react-navigation/native';
 import React, { FC, useEffect, useRef, useState } from 'react';
 import { ScrollView } from 'react-native';
@@ -31,6 +32,10 @@ const ChatScreen: FC = () => {
   useEffect(() => {
     setOptimisticMessage(null);
   }, [messages]);
+
+  if (!messages.length) {
+    return <Spinner />;
+  }
 
   return (
     <>

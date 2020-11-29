@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
+import { debounceTime } from 'rxjs/operators';
 import { useAuthContext } from '../contexts';
 import { gun, observeGunMany } from '../gun';
 import { Message } from '../models';
@@ -10,11 +11,13 @@ export function useChannelMessages(teamId: string, channelId: string) {
   useEffect(() => {
     setMessages([]);
 
-    const subscription = observeGunMany(`teams/${teamId}/channels/${channelId}/messages`).subscribe(_messages => {
-      _messages = _messages.filter(Boolean);
-      _messages.sort((a, b) => a.createdDateTime.localeCompare(b.createdDateTime));
-      setMessages(_messages);
-    });
+    const subscription = observeGunMany(`teams/${teamId}/channels/${channelId}/messages`)
+      .pipe(debounceTime(500))
+      .subscribe(_messages => {
+        _messages = _messages.filter(Boolean);
+        _messages.sort((a, b) => a.createdDateTime.localeCompare(b.createdDateTime));
+        setMessages(_messages);
+      });
 
     return () => subscription.unsubscribe();
   }, [channelId, teamId]);

@@ -22,6 +22,7 @@ export function getPaths(list: any): string[] {
 
 export async function promiseGun(path: string): Promise<any> {
   return new Promise(resolve => {
+    console.log('once', path);
     gun.get(path).once(data => {
       resolve(data!);
     });
@@ -30,9 +31,18 @@ export async function promiseGun(path: string): Promise<any> {
 
 export function observeGun(path: string): Observable<any> {
   return new Observable(subscriber => {
+    console.log('on  ', path);
     const selector = gun.get(path);
-    selector.on(data => subscriber.next(data));
-    return () => selector.off();
+
+    selector.on(data => {
+      console.log('data', path);
+      subscriber.next(data);
+    });
+
+    return () => {
+      console.log('xon ', path);
+      selector.off();
+    };
   });
 }
 
@@ -47,36 +57,4 @@ export function observeGunMany(path: string, observeLeaves = false): Observable<
       return combineLatest(paths.map(_path => (observeLeaves ? observeGun(_path) : promiseGun(_path))));
     }),
   );
-}
-
-export async function getMany(path: string): Promise<any[]> {
-  const list = await promiseGun(path);
-
-  if (!list) {
-    return [];
-  }
-
-  return Promise.all(
-    Object.keys(list)
-      .filter(key => key !== '_' && key !== '#')
-      .map(key => promiseGun(list[key]['#'])),
-  );
-}
-
-export function watchMany(path: string, callback: (data: any[]) => void) {
-  const selector = gun.get(path);
-
-  selector.on(list => {
-    if (!list) {
-      callback([]);
-    }
-
-    Promise.all(
-      Object.keys(list)
-        .filter(key => key !== '_' && key !== '#')
-        .map(key => promiseGun(list[key]['#'])),
-    ).then(callback);
-  });
-
-  return () => selector.off();
 }

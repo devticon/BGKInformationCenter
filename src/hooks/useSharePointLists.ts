@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import { combineLatest, of } from 'rxjs';
-import { map, switchMap } from 'rxjs/operators';
+import { debounceTime, map, switchMap } from 'rxjs/operators';
 import { useAuthContext } from '../contexts';
-import { getMany, getPaths, observeGun, observeGunMany, promiseGun, watchMany } from '../gun';
+import { getPaths, observeGun, observeGunMany } from '../gun';
 
 export function useSharePointLists() {
   const [lists, setLists] = useState<any[]>([]);
@@ -10,26 +10,29 @@ export function useSharePointLists() {
 
   useEffect(() => {
     if (userId) {
-      watchMany(`${userId}/sharepoint/lists`, async lists => {
-        lists = lists.filter(Boolean);
+      const subscription = observeGun(`${userId}/sharepoint/lists`)
+        .pipe(
+          switchMap(_lists => {
+            const listPaths = getPaths(_lists);
+            return combineLatest(
+              listPaths.map(path =>
+                observeGun(path).pipe(
+                  switchMap(list => {
+                    if (list.items && list.items['#']) {
+                      return observeGunMany(list.items['#']).pipe(map(items => ({ ...list, items })));
+                    } else {
+                      return of({ ...list, items: [] });
+                    }
+                  }),
+                ),
+              ),
+            );
+          }),
+          debounceTime(500),
+        )
+        .subscribe(data => setLists(data));
 
-        for (const list of lists) {
-          if (list.items && list.items['#']) {
-            list.items = await getMany(list.items['#']);
-            list.items = list.items.filter(Boolean);
-
-            for (const item of list.items) {
-              if (item.fields && item.fields['#']) {
-                item.fields = await promiseGun(item.fields['#']);
-              }
-            }
-          } else {
-            list.items = [];
-          }
-        }
-
-        setLists(lists);
-      });
+      return () => subscription.unsubscribe();
     } else {
       setLists([]);
     }
