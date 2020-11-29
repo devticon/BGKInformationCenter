@@ -1,4 +1,4 @@
-import { fontSizes, fontWeights, gutter, gutterLarge, gutterMedium } from '@theme';
+import { colors, fontSizes, fontWeights, gutter, gutterLarge, gutterMedium } from '@theme';
 import { StyleSheet } from 'react-native';
 
 export const styles = StyleSheet.create({
@@ -22,11 +22,16 @@ export const styles = StyleSheet.create({
   },
   footer: {
     fontSize: fontSizes.caption,
-    marginTop: gutter,
     lineHeight: 20,
+  },
+  favicon: {
+    width: 20,
+    height: 20,
+    marginRight: gutter,
   },
   image: {
     width: '100%',
     height: 104,
+    backgroundColor: colors.primary,
   },
 });

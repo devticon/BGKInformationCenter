@@ -1,4 +1,5 @@
 import { Text } from '@components';
+import { flexAlignCenter, flexRow, margin } from '@theme';
 import { formatDate } from '@utils';
 import React, { FC } from 'react';
 import { Image, Linking, Pressable, View } from 'react-native';
@@ -16,7 +17,12 @@ const ArticleRow: FC<Props> = ({ article }) => {
         <Text style={styles.title} numberOfLines={3}>
           {article.title}
         </Text>
-        <Text style={styles.footer}>{formatDate(article.date)} / Aktualności</Text>
+        <View style={[flexRow, flexAlignCenter, margin.small.top]}>
+          {!!article.channel_icon && <Image style={styles.favicon} source={{ uri: article.channel_icon }} />}
+          <Text style={styles.footer}>
+            {formatDate(article.pubDate)} / {article.channel_name}
+          </Text>
+        </View>
       </View>
       <View style={styles.right}>
         <Image style={styles.image} source={{ uri: article.image }} />

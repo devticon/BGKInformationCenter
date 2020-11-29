@@ -1,7 +1,8 @@
 export type Article = {
   id: string;
   title: string;
-  date: string;
-  image: string;
+  pubDate: string;
   link: string;
+  channel_name: string;
+  channel_icon: string;
 };
